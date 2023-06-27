@@ -44066,16 +44066,17 @@ class ObjectLoader extends Loader {
 		const shapes = this.parseShapes( json.shapes );
 		const geometries = this.parseGeometries( json.geometries, shapes );
 
+		const textures = this.parseTextures( json.textures, images );
+		const materials = this.parseMaterials( json.materials, textures );
+
+		const object = this.parseObject( json.object, geometries, materials, textures, animations );
+
 		const images = this.parseImages( json.images, function () {
 
 			if ( onLoad !== undefined ) onLoad( object );
 
 		} );
-
-		const textures = this.parseTextures( json.textures, images );
-		const materials = this.parseMaterials( json.materials, textures );
-
-		const object = this.parseObject( json.object, geometries, materials, textures, animations );
+		
 		const skeletons = this.parseSkeletons( json.skeletons, object );
 
 		this.bindSkeletons( object, skeletons );
